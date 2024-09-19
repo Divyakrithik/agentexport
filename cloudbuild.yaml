@@ -11,3 +11,5 @@ steps:
        --location=${_LOCATION} \
        --agent=${_AGENT_ID_TO_EXPORT} \
        --output-path=gs://${_BUCKET_NAME}/${_EXPORT_FILE_NAME}
+options:
+  logging: CLOUD_LOGGING_ONLY 
