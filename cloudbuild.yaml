@@ -1,15 +1,19 @@
 steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    secretEnv: ['agent-export-service-account-key']
     entrypoint: 'bash'
     args:
       - '-c'
       - |
-       gcloud auth activate-service-account --key-file=C:\ref\JSON
-       # Export Dialogflow CX agent
-       gcloud dialogflow CX agents export \
-       --project=${_PROJECT_ID} \
-       --location=${_LOCATION} \
-       --agent=${_AGENT_ID_TO_EXPORT} \
-       --output-path=gs://${_BUCKET_NAME}/${_EXPORT_FILE_NAME}
+        # Write the secret (service account JSON) to a file
+        echo "$agent-export-service-account-key" > /tmp/service-account-key.json
+        # Use the service account key file to authenticate
+        gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
+        # Export Dialogflow CX agent
+        gcloud dialogflow CX agents export \
+        --project=${_PROJECT_ID} \
+        --location=${_LOCATION} \
+        --agent=${_AGENT_ID_TO_EXPORT} \
+        --output-path=gs://${_BUCKET_NAME}/${_EXPORT_FILE_NAME}
 options:
   logging: CLOUD_LOGGING_ONLY 
