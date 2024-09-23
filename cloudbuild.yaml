@@ -6,6 +6,7 @@ steps:
   args: ['auth', 'activate-service-account', '--key-file=/workspace/agentexport.json']
 steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    args: ['auth', 'activate-service-account', '--key-file=/workspace/agentexport.json']
     entrypoint: 'bash'
     args:
       - '-c'
