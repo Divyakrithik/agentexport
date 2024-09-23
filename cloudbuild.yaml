@@ -1,7 +1,7 @@
 options:
   substitution_option: ALLOW_LOOSE
 substitutions:
-  _KEY_FILE_PATH: '/ref/JSON/agentexport.json'
+  _KEY_FILE_PATH: 'C:\ref\JSON\agentexport.json'
 
 steps:
 - name: 'gcr.io/cloud-builders/gsutil'
