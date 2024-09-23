@@ -1,21 +1,16 @@
-options:
-  substitution_option: ALLOW_LOOSE
-substitutions:
-  _KEY_FILE_PATH: 'C:\ref\JSON\agentexport.json'
-
 steps:
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', 'gs://agentexportservicekey/service-account-key.json', '${_KEY_FILE_PATH}']
+  args: ['cp', 'gs://agentexportservicekey/agentexport.json.json', '/workspace/agentexport.json']
 
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['auth', 'activate-service-account', '--key-file=${_KEY_FILE_PATH}']
+  args: ['auth', 'activate-service-account', '--key-file=/workspace/agentexport.json']
 steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
-        gcloud auth activate-service-account --key-file=${_KEY_FILE_PATH}
+        gcloud auth activate-service-account --key-file=/workspace/agentexport.json
         # Export Dialogflow CX agent
         gcloud dialogflow CX agents export \
         --project=${_PROJECT_ID} \
