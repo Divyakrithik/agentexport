@@ -12,7 +12,7 @@ steps:
       - |
         #gcloud auth activate-service-account --key-file=/workspace/agentexport.json
         # Export Dialogflow CX agent
-        gcloud dialogflow CX agents export \
+        gcloud alpha dialogflow CX agents export \
         --project=${_PROJECT_ID} \
         --location=${_LOCATION} \
         --agent=${_AGENT_ID_TO_EXPORT} \
