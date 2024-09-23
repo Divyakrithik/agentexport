@@ -15,7 +15,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud auth activate-service-account --key-file=${_SERVICE_ACCOUNT_KEY}
+        gcloud auth activate-service-account --key-file=${_KEY_FILE_PATH}
         # Export Dialogflow CX agent
         gcloud dialogflow CX agents export \
         --project=${_PROJECT_ID} \
