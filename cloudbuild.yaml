@@ -4,9 +4,6 @@ steps:
   args: ['cp', 'gs://agentexportservicekey/agentexport.json', '/workspace/agentexport.json']
 
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['auth', 'activate-service-account', '--key-file=/workspace/agentexport.json']
-
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
   entrypoint: 'bash'
   args:
       - '-c'
