@@ -3,8 +3,9 @@ steps:
   args: ['cp', 'gs://agentexportservicekey/agentexport.json', '/workspace/agentexport.json']
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['auth', 'activate-service-account', '--key-file=/workspace/agentexport.json']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
   entrypoint: 'bash'
-args:
+  args:  
 - '-c'
 - |
   gcloud auth activate-service-account --key-file=${_SERVICE_ACCOUNT_KEY}
@@ -14,3 +15,7 @@ args:
   --location=${_LOCATION} \
   --agent=${_AGENT_ID_TO_EXPORT} \
   --output-path=gs://${_BUCKET_NAME}/${_EXPORT_FILE_NAME}
+options:
+  logging: CLOUD_LOGGING_ONLY   
+  
+  
