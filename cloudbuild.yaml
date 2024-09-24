@@ -1,6 +1,6 @@
 steps:
   - name: 'gcr.io/cloud-builders/gsutil'
-    args: ['cp', 'gs://agentexportservicekey/agentexport.json', '/workspace/agentexport.json'
+    args: ['cp', 'gs://agentexportservicekey/agentexport.json', '/workspace/agentexport.json']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:latest'
     entrypoint: 'bash'
     args:
