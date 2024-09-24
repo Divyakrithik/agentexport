@@ -1,21 +1,14 @@
 steps:
-- name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', 'gs://agentexportservicekey/agentexport.json', '/workspace/agentexport.json']
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['auth', 'activate-service-account', '--key-file=/workspace/agentexport.json']
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
-  entrypoint: 'bash'
-  args:  
-- '-c'
-- |
-  gcloud auth activate-service-account --key-file=${_SERVICE_ACCOUNT_KEY}
-  # Export Dialogflow CX agent
-  gcloud dialogflow CX agents export \
-  --project=${_PROJECT_ID} \
-  --location=${_LOCATION} \
-  --agent=${_AGENT_ID_TO_EXPORT} \
-  --output-path=gs://${_BUCKET_NAME}/${_EXPORT_FILE_NAME}
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['cp', 'gs://agentexportservicekey/agentexport.json', '/workspace/agentexport.json'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:latest'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        #gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+        gcloud dialogflow cx agents export \
+          --agent=projects/$PROJECT_ID/locations/$LOCATION/agents/$AGENT_ID \
+          --output-file=gs://$BUCKET_NAME/$EXPORT_FILE_NAME
 options:
-  logging: CLOUD_LOGGING_ONLY   
-  
-  
+  logging: CLOUD_LOGGING_ONLY
