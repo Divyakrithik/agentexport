@@ -1,17 +1,16 @@
 steps:
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', 'gs://agentexportservicekey/agentexport.json', '/workspace/agentexport.json']
+
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['auth', 'activate-service-account', '--key-file=/workspace/agentexport.json']
   entrypoint: 'bash'
+  args:
       - '-c'
       - |
         #gcloud auth activate-service-account --key-file=/workspace/agentexport.json
         # Export Dialogflow CX agent
-        gcloud beta dialogflow CX agents export \
-        --project=${_PROJECT_ID} \
-        --location=${_LOCATION} \
-        --agent=${_AGENT_ID_TO_EXPORT} \
-        --output-path=gs://${_BUCKET_NAME}/${_EXPORT_FILE_NAME}
+        gcloud alpha dialogflow CX agents export \
+          --agent=projects/${_PROJECT_ID}/locations/${_LOCATION}/agents/${_AGENT_ID_TO_EXPORT} \
+          --output-file=gs://${_BUCKET_NAME}/${_EXPORT_FILE_NAME}
 options:
   logging: CLOUD_LOGGING_ONLY 
