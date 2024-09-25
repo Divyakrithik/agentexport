@@ -12,5 +12,6 @@ steps:
         gcloud alpha dialogflow CX agents export \
           --agent=projects/${_PROJECT_ID}/locations/${_LOCATION}/agents/${_AGENT_ID_TO_EXPORT} \
           --output-file=gs://${_BUCKET_NAME}/${_EXPORT_FILE_NAME}
+          --verbosity=debug
 options:
   logging: CLOUD_LOGGING_ONLY 
